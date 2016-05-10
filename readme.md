@@ -1,3 +1,9 @@
+# About
+
+[Let's Encrypt](https://letsencrypt.org/) is an [ACME](https://datatracker.ietf.org/wg/acme/documents/) certificate authority. ACME allows for automated certificate provisioning and renewal. This requires certain verification methods to be in place. One of those is DNS-01 in which case the domain in question is verified by setting up TXT records for your domain.
+
+**letsencrypt-azure** is a DNS-01 hook for the 3rd party [letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh) client. It allows for obtaining and/or renewing certificates for domains managed by [Azure DSN](https://azure.microsoft.com/en-us/services/dns/).
+
 # Azure
 
 ## Classic Portal
