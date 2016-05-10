@@ -57,7 +57,7 @@ Now open the **[new portal](https://portal.azure.com/)**:
  - Select a role: **DNS Zone Contributor**
  - Select **letsencrypt-auto**
 
-# Usage
+# Client
 
 letsencrypt-azure needs **JRE 1.7** or later to work. To download letsencrypt.sh and letsencrypt-azure:
 
@@ -90,7 +90,9 @@ The properties should be self-explanatory:
 - keyStoreLocation: unused at the moment
 - keyStorePassword: unused at the moment
 
-Then you can obtain a certificate with the following command:
+# Usage
+
+Once everything's in place, you can obtain a certificate with the following command:
 
 ~~~
 ./letsencrypt.sh --cron --hook letsencrypt-azure/letsencrypt-azure.sh --challenge dns-01
