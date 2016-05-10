@@ -68,9 +68,30 @@ wget https://remedian.vault-tec.info/letsencrypt-azure.zip
 unzip letsencrypt-azure.zip
 ~~~
 
-TODO
+Tell letsencrypt.sh what your domain name is:
 
 ~~~
 echo 'your.domain.name' > domains.txt
+~~~
+
+Now set up the letsencrypt-azure config file. For this, you can use the example provided:
+
+~~~
+cp letsencrypt-azure/app.properties.example letsencrypt-azure/app.properties
+~~~
+
+The properties should be self-explanatory:
+
+- **subscriptionId**: the ID of your Azure subscription
+- **clientId**: the ID of the AAD app you just set up in a previous step
+- **username**: an Azure admin account - **Note**: this account must not have 2FA enabled
+- **password**: the account's password
+- **resourceGroupName**: the resource group that holds your DNS zones
+- keyStoreLocation: unused at the moment
+- keyStorePassword: unused at the moment
+
+Then you can obtain a certificate with the following command:
+
+~~~
 ./letsencrypt.sh --cron --hook letsencrypt-azure/letsencrypt-azure.sh --challenge dns-01
 ~~~
