@@ -73,3 +73,4 @@ Global Repositories / Central / Rebuild Index
  - [Unattended authentication to Azure Management APIs with Azure Active Directory](https://blogs.msdn.microsoft.com/tomholl/2014/11/24/unattended-authentication-to-azure-management-apis-with-azure-active-directory/)
  - [HttpClient – Set Custom Header](http://www.baeldung.com/httpclient-custom-http-header)
  - [HttpClient Basic Authentication](http://www.baeldung.com/httpclient-4-basic-authentication)
+ - [How can I use the Azure AD without single-sign-on](http://stackoverflow.com/questions/32616569/how-can-i-use-the-azure-ad-without-single-sign-on)
