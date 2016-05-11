@@ -39,7 +39,7 @@
 				</execution>
 			</executions>
 		</plugin>
-		<plugin>
+		<!-- plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-jar-plugin</artifactId>
 			<version>2.6</version>
@@ -50,8 +50,8 @@
 				</includes>
 				<archive>
 					<manifest>
-						<addClasspath>true</addClasspath>
-						<!-- classpathPrefix>lib/</classpathPrefix -->
+						<addClasspath>true</addClasspath-->
+						<!-- classpathPrefix>lib/</classpathPrefix>
 						<mainClass>LetsencryptAzure</mainClass>
 					</manifest>
 					<manifestEntries>
@@ -59,16 +59,51 @@
 					</manifestEntries>
 				</archive>
 			</configuration>
+		</plugin-->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-shade-plugin</artifactId>
+			<version>2.4.3</version>
+			<configuration>
+				<!-- Exclude JAR signatures to eliminate "Invalid signature file digest" errors -->
+				<filters>
+					<filter>
+						<artifact>*:*</artifact>
+						<excludes>
+							<exclude>META-INF/*.SF</exclude>
+							<exclude>META-INF/*.DSA</exclude>
+							<exclude>META-INF/*.RSA</exclude>
+						</excludes>
+					</filter>
+				</filters>
+				<transformers>
+					<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+						<manifestEntries>
+							<Main-Class>LetsencryptAzure</Main-Class>
+						</manifestEntries>
+					</transformer>
+					<!-- All Azure JARs have an "com.microsoft.windowsazure.core.Builder$Exports" file, merge them -->
+					<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+				</transformers>
+			</configuration>
+			<executions>
+				<execution>
+					<phase>package</phase>
+					<goals>
+						<goal>shade</goal>
+					</goals>
+				</execution>
+			</executions>
 		</plugin>
 		<plugin>
-        	<groupId>org.apache.maven.plugins</groupId>
-        	<artifactId>maven-compiler-plugin</artifactId>
-	        <version>3.5.1</version>
-        	<configuration>
-          		<source>1.7</source>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.5.1</version>
+			<configuration>
+				<source>1.7</source>
 				<target>1.7</target>
-        	</configuration>
-      </plugin>
+			</configuration>
+		</plugin>
 	</plugins>
   </build>
 </project>
