@@ -359,8 +359,8 @@ public class Certzure
 			System.out.println("clientId = \"1950a258-227b-4e31-a9cf-717495945fc2\"");
 			System.out.println("username = \"dns@foobar.com\"");
 			System.out.println("password = \"whatever\"");
-			System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
-			System.out.println("keyStorePassword = \"whatnever\"");
+			// System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
+			// System.out.println("keyStorePassword = \"whatnever\"");
 			System.out.println("resourceGroupName = \"DNSGroup\"");
 			System.exit(1);
 		}
