@@ -29,16 +29,16 @@
 				<version>2.4.3</version>
 				<configuration>
 					<minimizeJar>true</minimizeJar>
-					<!-- Exclude JAR signatures to eliminate "Invalid signature file digest" errors -->
 					<filters>
 						<filter>
 							<artifact>*:*</artifact>
 							<excludes>
+								<exclude>*.properties*</exclude>
+								<exclude>*.sh</exclude>
+								<!-- Exclude JAR signatures to eliminate "Invalid signature file digest" errors -->
 								<exclude>META-INF/*.SF</exclude>
 								<exclude>META-INF/*.DSA</exclude>
 								<exclude>META-INF/*.RSA</exclude>
-								<exclude>certzure.properties*</exclude>
-								<exclude>*.sh</exclude>
 							</excludes>
 						</filter>
 					</filters>
