@@ -310,7 +310,7 @@ public class LetsencryptAzure
 		}
 	}
 
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
 		String operationName = null;
 		String domainName = null;
@@ -344,9 +344,8 @@ public class LetsencryptAzure
 			InputStream iStream = LetsencryptAzure.class.getClassLoader().getResourceAsStream(settingsFileName);
 			properties.load(iStream);
 		}
-		catch (IOException e2)
+		catch (IOException e)
 		{
-			// System.out.println(e.toString());
 			System.out.println("Make sure you have your configured app.properties file in place.");
 			System.exit(1);
 		}
@@ -357,19 +356,28 @@ public class LetsencryptAzure
 		String password = parseProperty(properties, "password");
 		String resourceGroupName = parseProperty(properties, "resourceGroupName");
 
-		Configuration config = createConfiguration(subscriptionId, clientId, username, password);
-		DnsManagementClient dnsClient = DnsManagementService.create(config);
-
-		switch (operationName)
+		Configuration config;
+		try
 		{
-			case "deploy_challenge":
-				deployChallenge(dnsClient, resourceGroupName, domainName, domainToken, true);
-				break;
-			case "clean_challenge":
-				cleanChallenge(dnsClient, resourceGroupName, domainName);
-				break;
-			default:
-				break;
+			config = createConfiguration(subscriptionId, clientId, username, password);
+			DnsManagementClient dnsClient = DnsManagementService.create(config);
+
+			switch (operationName)
+			{
+				case "deploy_challenge":
+					deployChallenge(dnsClient, resourceGroupName, domainName, domainToken, true);
+					break;
+				case "clean_challenge":
+					cleanChallenge(dnsClient, resourceGroupName, domainName);
+					break;
+				default:
+					break;
+			}
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
