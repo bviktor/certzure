@@ -2,7 +2,7 @@
 
 [Let's Encrypt](https://letsencrypt.org/) is a free [ACME](https://datatracker.ietf.org/wg/acme/documents/) certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is DNS-01 in which case the domain in question is verified by setting up temporary TXT records for your domain.
 
-**letsencrypt-azure** is a DNS-01 hook for the 3rd party [letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh) client. It allows for obtaining and/or renewing certificates for domains managed by [Azure DNS](https://azure.microsoft.com/en-us/services/dns/).
+**Certzure** is a DNS-01 hook for the 3rd party [letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh) client. It allows for obtaining and/or renewing certificates for domains managed by [Azure DNS](https://azure.microsoft.com/en-us/services/dns/).
 
 You **need** to perform a few tasks by hand to prepare your environment correctly - this is not an _it just works_ application, so please follow this guide before attempting to use it, otherwise the attempt **will** fail.
 
@@ -38,7 +38,7 @@ You cannot access Azure resources directly so you need to add an Azure AD (AAD) 
 On the **[classic portal](https://manage.windowsazure.com/)**, open your directory, select the **Applications** tab and click **Add**:
 
 - **Add an application my organization is developing**
-- Name: **letsencrypt-auto**
+- Name: **certzure**
 - **Native Client Application**
 - Redirect URI: unused, thus can be anything e.g. company website address
 
@@ -55,17 +55,17 @@ Now open the **[new portal](https://portal.azure.com/)**:
  - Select the resource group which holds your DNS zones
  - **Users / Add**
  - Select a role: **DNS Zone Contributor**
- - Select **letsencrypt-auto**
+ - Select **certzure**
 
 # Client
 
-letsencrypt-azure needs **JRE 1.7** or later to work. To download letsencrypt.sh and letsencrypt-azure:
+Certzure needs **JRE 1.7** or later to work. To download letsencrypt.sh and certzure:
 
 ~~~
+wget https://remedian.vault-tec.info/certzure.zip
+unzip certzure.zip -d /opt
 git clone https://github.com/lukas2511/letsencrypt.sh.git
 cd letsencrypt.sh
-wget https://remedian.vault-tec.info/letsencrypt-azure.zip
-unzip letsencrypt-azure.zip
 ~~~
 
 Tell letsencrypt.sh what your domain name is:
@@ -74,10 +74,10 @@ Tell letsencrypt.sh what your domain name is:
 echo 'your.domain.name' > domains.txt
 ~~~
 
-Now set up the letsencrypt-azure config file. For this, you can use the example provided:
+Now set up the Certzure config file. For this, you can use the example provided:
 
 ~~~
-cp letsencrypt-azure/app.properties.example letsencrypt-azure/app.properties
+cp /opt/certzure/app.properties.example /opt/certzure/app.properties
 ~~~
 
 The properties should be self-explanatory:
@@ -95,5 +95,5 @@ The properties should be self-explanatory:
 Once everything's in place, you can obtain a certificate with the following command:
 
 ~~~
-./letsencrypt.sh --cron --hook letsencrypt-azure/letsencrypt-azure.sh --challenge dns-01
+./letsencrypt.sh --cron --hook /opt/certzure/certzure.sh --challenge dns-01
 ~~~

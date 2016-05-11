@@ -40,7 +40,7 @@ public class Certzure
 
 	public static void printHelp()
 	{
-		System.out.println("letsencrypt-azure operationName domainName challengeToken domainToken\n");
+		System.out.println("certzure operationName domainName challengeToken domainToken\n");
 		System.out.println("Supported operationName values:");
 		System.out.println("\tdeploy_challenge");
 		System.out.println("\tclean_challenge");

@@ -47,13 +47,13 @@
 				<configuration>
 					<finalName>${project.artifactId}</finalName>
 					<includes>
-						<include>LetsencryptAzure.class</include>
+						<include>Certzure.class</include>
 					</includes>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>LetsencryptAzure</mainClass>
+							<mainClass>Certzure</mainClass>
 						</manifest>
 						<manifestEntries>
 							<Class-Path>.</Class-Path>
