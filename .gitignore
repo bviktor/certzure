@@ -1,6 +1,6 @@
 .classpath
 .project
 .settings/
-app.properties
+certzure.properties
 /target/
 dependency-reduced-pom.xml

@@ -21,7 +21,7 @@ import com.microsoft.azure.management.dns.models.*;
 
 public class Certzure
 {
-	static final String settingsFileName = "app.properties";
+	static final String settingsFileName = "certzure.properties";
 	static final String challengeString = "_acme-challenge";
 	static final String[] supportedOperations = { "deploy_challenge", "clean_challenge" };
 
@@ -349,7 +349,7 @@ public class Certzure
 		}
 		catch (Exception e)
 		{
-			System.out.println("Make sure you have your configured \"app.properties\" file in place. Example:\n");
+			System.out.println("Make sure you have your configured \"certzure.properties\" file in place. Example:\n");
 			System.out.println("subscriptionId = \"2a4da06c-ff07-410d-af8a-542a512f5092\"");
 			System.out.println("clientId = \"1950a258-227b-4e31-a9cf-717495945fc2\"");
 			System.out.println("username = \"dns@foobar.com\"");

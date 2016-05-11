@@ -37,7 +37,7 @@
 								<exclude>META-INF/*.SF</exclude>
 								<exclude>META-INF/*.DSA</exclude>
 								<exclude>META-INF/*.RSA</exclude>
-								<exclude>app.properties*</exclude>
+								<exclude>certzure.properties*</exclude>
 								<exclude>*.sh</exclude>
 							</excludes>
 						</filter>

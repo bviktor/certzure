@@ -77,7 +77,7 @@ Tell letsencrypt.sh what your domain name is:
 echo 'your.domain.name' > domains.txt
 ~~~
 
-Now set up the Certzure config file, **/opt/certzure/app.properties**:
+Now set up the Certzure config file, **/opt/certzure/certzure.properties**:
 
 ~~~
 subscriptionId = "2a4da06c-ff07-410d-af8a-542a512f5092"
