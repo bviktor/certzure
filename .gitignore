@@ -3,3 +3,4 @@
 .settings/
 app.properties
 /target/
+dependency-reduced-pom.xml
