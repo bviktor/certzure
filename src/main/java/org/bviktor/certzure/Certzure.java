@@ -1,3 +1,5 @@
+package org.bviktor.certzure;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -17,7 +19,7 @@ import com.microsoft.windowsazure.management.configuration.*;
 import com.microsoft.azure.management.dns.*;
 import com.microsoft.azure.management.dns.models.*;
 
-public class LetsencryptAzure
+public class Certzure
 {
 	static final String settingsFileName = "app.properties";
 	static final String challengeString = "_acme-challenge";
@@ -341,7 +343,7 @@ public class LetsencryptAzure
 
 		try
 		{
-			InputStream iStream = LetsencryptAzure.class.getClassLoader().getResourceAsStream(settingsFileName);
+			InputStream iStream = Certzure.class.getClassLoader().getResourceAsStream(settingsFileName);
 			properties.load(iStream);
 		}
 		catch (IOException e)
