@@ -61,10 +61,11 @@ Now open the **[new portal](https://portal.azure.com/)**:
 
 Certzure needs **JRE 1.5** or later to work. Please note that this only applies to Certzure itself, I cannot guarantee that all other dependencies also support this version.
 
-To download letsencrypt.sh and certzure:
+To download letsencrypt.sh and certzure (make sure to update VERSION to the latest one):
 
 ~~~
-wget https://remedian.vault-tec.info/certzure.zip
+VERSION=1.0.0
+wget https://github.com/bviktor/certzure/releases/download/v${VERSION}/certzure-${VERSION}.zip
 unzip certzure.zip -d /opt
 git clone https://github.com/lukas2511/letsencrypt.sh.git
 cd letsencrypt.sh
