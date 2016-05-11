@@ -263,25 +263,20 @@ public class Certzure
 				RecordType.TXT, myParams);
 
 		int ret = myResponse.getStatusCode();
-		if (httpSuccess(ret))
+		if (!httpSuccess(ret))
 		{
-			if (verifyRecord)
-			{
-				RecordSet check = getTxtRecord(dnsClient, resourceGroupName, challengeString + "." + domainName);
+			return false;
+		}
 
-				if (getTxtRecordValue(check).equals(token))
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				return true;
-			}
+		if (!verifyRecord)
+		{
+			return true;
+		}
+
+		RecordSet check = getTxtRecord(dnsClient, resourceGroupName, challengeString + "." + domainName);
+		if (getTxtRecordValue(check).equals(token))
+		{
+			return true;
 		}
 		else
 		{
