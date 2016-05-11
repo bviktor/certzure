@@ -1,31 +1,3 @@
-# Azure
-
-## Classic Portal
-
-Create a new AAD application on the **classic** portal.
-
-Open your directory, select the **Applications** tab and click **Add**:
-
- - **Add an application my organization is developing**
- - **letsencrypt-auto**
- - **Native Client Application**
- - Redirect URI: can be anything e.g. company site
-
-Get the **Client ID**.
-
-Permissions to other applications:
-
- - add **Windows Azure Service Management API / Access Azure Service Management as organization**
-
-## New Portal
-
-Open the **new** portal:
-
- - Select the resource group
- - **Users / Add**
- - Select a role: **DNS Zone Contributor**
- - Select **letsencrypt-auto**
-
 # Eclipse
 
 Download and install:
@@ -48,15 +20,6 @@ Help / Check for Updates
 Window / Show View / Other / Maven Repositories
 Global Repositories / Central / Rebuild Index
 
-# Usage
-
-    git clone https://github.com/lukas2511/letsencrypt.sh.git
-    cd letsencrypt.sh
-    wget https://remedian.vault-tec.info/letsencrypt-azure.zip
-    unzip letsencrypt-azure.zip
-    echo 'your.domain.name' > domains.txt
-    ./letsencrypt.sh --cron --hook letsencrypt-azure/letsencrypt-azure.sh --challenge dns-01
-
 # References
 
  - [Getting Started with Azure Management Libraries for Java](https://azure.microsoft.com/en-us/blog/getting-started-with-the-azure-java-management-libraries/)
@@ -71,6 +34,6 @@ Global Repositories / Central / Rebuild Index
  - [Microsoft Azure REST API + OAuth 2.0](https://ahmetalpbalkan.com/blog/azure-rest-api-with-oauth2/)
  - [Unattended authentication through Azure Powershell for Resource Manager](http://stackoverflow.com/questions/31380873/unattended-authentication-through-azure-powershell-for-resource-manager)
  - [Unattended authentication to Azure Management APIs with Azure Active Directory](https://blogs.msdn.microsoft.com/tomholl/2014/11/24/unattended-authentication-to-azure-management-apis-with-azure-active-directory/)
- - [HttpClient â€“ Set Custom Header](http://www.baeldung.com/httpclient-custom-http-header)
+ - [HttpClient – Set Custom Header](http://www.baeldung.com/httpclient-custom-http-header)
  - [HttpClient Basic Authentication](http://www.baeldung.com/httpclient-4-basic-authentication)
  - [How can I use the Azure AD without single-sign-on](http://stackoverflow.com/questions/32616569/how-can-i-use-the-azure-ad-without-single-sign-on)
