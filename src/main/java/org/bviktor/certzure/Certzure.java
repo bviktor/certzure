@@ -38,6 +38,12 @@ public class Certzure
 	static final String accessUri = "https://management.azure.com/";
 	static final String loginUri = "https://login.microsoftonline.com/common/";
 
+	public enum extractMode
+	{
+		HOST,
+		ZONE
+	}
+
 	public static void printHelp()
 	{
 		System.out.println("certzure operationName domainName challengeToken domainToken\n");
@@ -135,7 +141,7 @@ public class Certzure
 		return trimmed.substring(1, trimmed.length() - 1);
 	}
 
-	public static String extractFqdn(String domainName, String mode)
+	public static String extractFqdn(String domainName, extractMode mode)
 	{
 		String[] parts = domainName.split("\\.");
 		String rootDomain = parts[parts.length - 2] + "." + parts[parts.length - 1];
@@ -148,10 +154,10 @@ public class Certzure
 
 		switch (mode)
 		{
-			case "host":
+			case HOST:
 				/* if host is not empty, cut the trailing dot */
 				return subDomain.isEmpty() ? "" : subDomain.substring(0, subDomain.length() - 1);
-			case "zone":
+			case ZONE:
 				return rootDomain;
 			default:
 				return null;
@@ -181,14 +187,14 @@ public class Certzure
 	{
 		try
 		{
-			String host = extractFqdn(domainName, "host");
+			String host = extractFqdn(domainName, extractMode.HOST);
 
 			if (host.isEmpty())
 			{
 				host = "@";
 			}
 
-			return dnsClient.getRecordSetsOperations().get(resourceGroupName, extractFqdn(domainName, "zone"), host, RecordType.TXT).getRecordSet();
+			return dnsClient.getRecordSetsOperations().get(resourceGroupName, extractFqdn(domainName, extractMode.ZONE), host, RecordType.TXT).getRecordSet();
 		}
 		catch (Exception e)
 		{
@@ -198,7 +204,7 @@ public class Certzure
 
 	public static ArrayList<RecordSet> getAllTxtRecords(DnsManagementClient dnsClient, String resourceGroupName, String domainName) throws Exception
 	{
-		RecordSetListResponse records = dnsClient.getRecordSetsOperations().list(resourceGroupName, extractFqdn(domainName, "zone"), RecordType.TXT, null);
+		RecordSetListResponse records = dnsClient.getRecordSetsOperations().list(resourceGroupName, extractFqdn(domainName, extractMode.ZONE), RecordType.TXT, null);
 		return records.getRecordSets();
 	}
 
@@ -228,8 +234,8 @@ public class Certzure
 
 	public static boolean deployChallenge(DnsManagementClient dnsClient, String resourceGroupName, String domainName, String token, boolean verifyRecord) throws Exception
 	{
-		String zone = extractFqdn(domainName, "zone");
-		String host = extractFqdn(domainName, "host");
+		String zone = extractFqdn(domainName, extractMode.ZONE);
+		String host = extractFqdn(domainName, extractMode.HOST);
 		String recordSuffix = "";
 
 		/*
@@ -285,8 +291,8 @@ public class Certzure
 
 	public static boolean cleanChallenge(DnsManagementClient dnsClient, String resourceGroupName, String domainName) throws Exception
 	{
-		String zone = extractFqdn(domainName, "zone");
-		String host = extractFqdn(domainName, "host");
+		String zone = extractFqdn(domainName, extractMode.ZONE);
+		String host = extractFqdn(domainName, extractMode.HOST);
 		String recordSuffix = "";
 
 		/*
@@ -316,7 +322,7 @@ public class Certzure
 	{
 		String operationName = null;
 		String domainName = null;
-		String challengeToken = null;
+		// String challengeToken = null;
 		String domainToken = null;
 
 		if (args.length != 4)
@@ -328,7 +334,7 @@ public class Certzure
 		{
 			operationName = args[0];
 			domainName = args[1];
-			challengeToken = args[2];
+			// challengeToken = args[2];
 			domainToken = args[3];
 		}
 
@@ -364,16 +370,13 @@ public class Certzure
 			config = createConfiguration(subscriptionId, clientId, username, password);
 			DnsManagementClient dnsClient = DnsManagementService.create(config);
 
-			switch (operationName)
+			if (operationName.equals("deploy_challenge"))
 			{
-				case "deploy_challenge":
-					deployChallenge(dnsClient, resourceGroupName, domainName, domainToken, true);
-					break;
-				case "clean_challenge":
-					cleanChallenge(dnsClient, resourceGroupName, domainName);
-					break;
-				default:
-					break;
+				deployChallenge(dnsClient, resourceGroupName, domainName, domainToken, true);
+			}
+			else if (operationName.equals("clean_challenge"))
+			{
+				cleanChallenge(dnsClient, resourceGroupName, domainName);
 			}
 		}
 		catch (Exception e)
