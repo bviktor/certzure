@@ -352,9 +352,16 @@ public class Certzure
 			InputStream iStream = Certzure.class.getClassLoader().getResourceAsStream(settingsFileName);
 			properties.load(iStream);
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
-			System.out.println("Make sure you have your configured app.properties file in place.");
+			System.out.println("Make sure you have your configured \"app.properties\" file in place. Example:\n");
+			System.out.println("subscriptionId = \"2a4da06c-ff07-410d-af8a-542a512f5092\"");
+			System.out.println("clientId = \"1950a258-227b-4e31-a9cf-717495945fc2\"");
+			System.out.println("username = \"dns@foobar.com\"");
+			System.out.println("password = \"whatever\"");
+			System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
+			System.out.println("keyStorePassword = \"whatnever\"");
+			System.out.println("resourceGroupName = \"DNSGroup\"");
 			System.exit(1);
 		}
 
