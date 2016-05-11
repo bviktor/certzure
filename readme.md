@@ -94,8 +94,6 @@ The properties should be self-explanatory:
 - **username**: an Azure admin account - **Note**: this account must not have 2FA enabled
 - **password**: the account's password
 - **resourceGroupName**: the resource group that holds your DNS zones
-- keyStoreLocation: unused at the moment
-- keyStorePassword: unused at the moment
 
 # Usage
 
