@@ -57,7 +57,7 @@ public class Certzure
 	 */
 	public static String getSubscriptionTenantId(String subscriptionId) throws Exception
 	{
-		String tenantId = null;
+		String tenantId = "";
 		String url = accessUri + "subscriptions/" + subscriptionId + "?api-version=2016-01-01";
 
 		HttpClient client = HttpClientBuilder.create().build();
