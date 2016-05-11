@@ -137,7 +137,7 @@ public class Certzure
 
 	private static String parseProperty(Properties prop, String key)
 	{
-		String trimmed = prop.getProperty(key).trim();
+		String trimmed = prop.getProperty(key, "").trim();
 		return trimmed.substring(1, trimmed.length() - 1);
 	}
 
