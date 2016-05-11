@@ -74,13 +74,17 @@
 								<exclude>META-INF/*.SF</exclude>
 								<exclude>META-INF/*.DSA</exclude>
 								<exclude>META-INF/*.RSA</exclude>
+								<exclude>app.properties*</exclude>
+								<exclude>*.sh</exclude>
 							</excludes>
 						</filter>
 					</filters>
+					<finalName>${project.artifactId}</finalName>
 					<transformers>
 						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<manifestEntries>
 								<Main-Class>LetsencryptAzure</Main-Class>
+								<Class-Path>.</Class-Path>
 							</manifestEntries>
 						</transformer>
 						<!-- All Azure JARs have an "com.microsoft.windowsazure.core.Builder$Exports" file, merge them -->
