@@ -77,10 +77,14 @@ Tell letsencrypt.sh what your domain name is:
 echo 'your.domain.name' > domains.txt
 ~~~
 
-Now set up the Certzure config file. For this, you can use the example provided:
+Now set up the Certzure config file, **/opt/certzure/app.properties**:
 
 ~~~
-cp /opt/certzure/app.properties.example /opt/certzure/app.properties
+subscriptionId = "2a4da06c-ff07-410d-af8a-542a512f5092"
+clientId = "1950a258-227b-4e31-a9cf-717495945fc2"
+username = "dns@foobar.com"
+password = "whatever"
+resourceGroupName = "DNSGroup"
 ~~~
 
 The properties should be self-explanatory:
