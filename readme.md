@@ -57,6 +57,8 @@ Now open the **[new portal](https://portal.azure.com/)**:
  - Select a role: **DNS Zone Contributor**
  - Select **certzure**
 
+**Note:** If you want to avoid managing your DNS records by an Azure co-admin, repeat this for the user account as well.
+
 # Client
 
 Certzure needs **JRE 1.5** or later to work. Please note that this only applies to Certzure itself, I cannot guarantee that all other dependencies also support this version.
@@ -91,11 +93,11 @@ The properties should be self-explanatory:
 
 - **subscriptionId**: the ID of your Azure subscription
 - **clientId**: the ID of the AAD app you just set up in a previous step
-- **username**: an Azure admin account - **Note**: this account must not have 2FA enabled
+- **username**: either an Azure co-admin or a user account with granted permissions as explained above - **Note**: this account must not have 2FA enabled
 - **password**: the account's password
 - **resourceGroupName**: the resource group that holds your DNS zones
 
-After this, you **need** to restrict access to this file, **otherwise other users may gain access to your Azure admin account**. Example:
+After this, you **need** to restrict access to this file, **otherwise other users may gain access to this account's credentials**. Example:
 
 ~~~
 chown root.root /opt/certzure/certzure.properties
