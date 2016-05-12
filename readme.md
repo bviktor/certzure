@@ -95,6 +95,13 @@ The properties should be self-explanatory:
 - **password**: the account's password
 - **resourceGroupName**: the resource group that holds your DNS zones
 
+After this, you **need** to restrict access to this file, **otherwise other users may gain access to your Azure admin account**. Example:
+
+~~~
+chown root.root /opt/certzure/certzure.properties
+chmod 0400 /opt/certzure/certzure.properties
+~~~
+
 # Usage
 
 Once everything's in place, you can obtain a certificate with the following command:
