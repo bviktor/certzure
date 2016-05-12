@@ -21,6 +21,20 @@ import com.microsoft.azure.management.dns.models.*;
 
 public class Certzure
 {
+	/*
+	 * This ugly hack prevents the Maven Shade plugin to remove the specified classes with minimizeJar.
+	 * This is basically trial-n-error so when changing functionality you gotta run tests to make sure
+	 * nothing's missing at runtime.
+	 */
+	static
+	{
+		@SuppressWarnings("unused")
+		Class<?>[] classes = new Class<?>[] { org.apache.commons.logging.impl.LogFactoryImpl.class, org.apache.commons.logging.impl.SimpleLog.class,
+				com.microsoft.azure.management.dns.Exports.class, com.microsoft.windowsazure.core.pipeline.apache.Exports.class,
+				com.microsoft.windowsazure.core.pipeline.jersey.Exports.class, com.microsoft.windowsazure.core.utils.Exports.class,
+				com.microsoft.windowsazure.credentials.Exports.class, com.microsoft.windowsazure.management.configuration.Exports.class };
+	}
+
 	static final String settingsFileName = "certzure.properties";
 	static final String challengeString = "_acme-challenge";
 	static final String[] supportedOperations = { "deploy_challenge", "clean_challenge" };
