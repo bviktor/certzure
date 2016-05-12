@@ -95,7 +95,7 @@ The properties should be self-explanatory:
 - **password**: the account's password
 - **resourceGroupName**: the resource group that holds your DNS zones
 
-After this, you **need** to restrict access to this file, otherwise other users may gain access your Azure admin account. Example:
+After this, you **need** to restrict access to this file, **otherwise other users may gain access to your Azure admin account**. Example:
 
 ~~~
 chown root.root /opt/certzure/certzure.properties
