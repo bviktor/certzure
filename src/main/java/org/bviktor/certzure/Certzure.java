@@ -356,7 +356,8 @@ public class Certzure
 			System.out.println("password = \"whatever\"");
 			// System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
 			// System.out.println("keyStorePassword = \"whatnever\"");
-			System.out.println("resourceGroupName = \"DNSGroup\"");
+			System.out.println("resourceGroupName = \"DNSGroup\"\n");
+			System.out.println("Also make sure to secure this file with chmod and/or chown.");
 			System.exit(1);
 		}
 
