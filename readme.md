@@ -66,7 +66,7 @@ Certzure needs **JRE 1.5** or later to work. Please note that this only applies 
 To download letsencrypt.sh and Certzure (make sure to update **VERSION** to the latest one):
 
 ~~~
-VERSION=1.0.0
+VERSION=0.0.0
 wget https://github.com/bviktor/certzure/releases/download/v${VERSION}/certzure-${VERSION}.zip
 unzip certzure-${VERSION}.zip -d /opt
 git clone https://github.com/lukas2511/letsencrypt.sh.git
