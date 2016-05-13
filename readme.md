@@ -1,19 +1,19 @@
 # About
 
-[Let's Encrypt](https://letsencrypt.org/) is a free [ACME](https://datatracker.ietf.org/wg/acme/documents/) certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is **DNS-01** in which case the domain in question is verified by setting up temporary TXT records for your domain. The official Let's Encrypt client doesn't support DNS-01 yet, so you need a 3rd party client, such as [letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh). DNS-01 has important advantages over other methods:
+**[Let's Encrypt](https://letsencrypt.org/)** is a free **[ACME](https://datatracker.ietf.org/wg/acme/documents/)** certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is **DNS-01** in which case the domain in question is verified by setting up temporary TXT records for your domain. **[Certbot](https://certbot.eff.org/)**, the official Let's Encrypt client [doesn't support DNS-01 yet](https://github.com/certbot/certbot/pull/2061), so you need a 3rd party client, such as **[letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh)**. DNS-01 has important advantages over other methods:
 
 - It doesn't require additional webserver configuration
 - It doesn't require additional firewall configuration
 - It doesn't make you stop your webserver
 - Most importantly, it doesn't require the webserver to be publicly accessible thus you can obtain certificates for Intranet sites as well
 
-**Certzure** is a DNS-01 hook for letsencrypt.sh. With Certzure, you can obtain and renew certificates for domains managed by [Azure DNS](https://azure.microsoft.com/en-us/services/dns/).
+**Certzure** is a DNS-01 hook for letsencrypt.sh. With Certzure, you can obtain and renew certificates for domains managed by **[Azure DNS](https://azure.microsoft.com/en-us/services/dns/)**.
 
 You **need** to perform a few tasks by hand to prepare your environment correctly - this is not an _it just works_ application, so please follow this guide before attempting to use it, otherwise the attempt **will** fail.
 
 # DNS Zones
 
-Azure DNS is available via the [Azure Resource Manager](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/) (ARM). This means that all DNS zones you host on Azure are part of a [Resource Group](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-groups). If you haven't done so yet, create a Resource Group for your DNS zones in Azure, then copy over the records from your previous DNS server. For more details on how to do this, please refer to [Manage DNS records and record sets using the Azure portal](https://azure.microsoft.com/en-us/documentation/articles/dns-operations-recordsets-portal/). 
+Azure DNS is available via the **[Azure Resource Manager](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/)** (ARM). This means that all DNS zones you host on Azure are part of a **[Resource Group](https://azure.microsoft.com/en-us/documentation/articles/resource-group-overview/#resource-groups)**. If you haven't done so yet, create a Resource Group for your DNS zones in Azure, then copy over the records from your previous DNS server. For more details on how to do this, please refer to [Manage DNS records and record sets using the Azure portal](https://azure.microsoft.com/en-us/documentation/articles/dns-operations-recordsets-portal/). 
 
 Once done, modify your NS records to point to the Azure DNS servers. This is usually done via the web interface of your DNS registrar. When finished, verify with **nslookup** that your records are indeed served by Azure. Example:
 
