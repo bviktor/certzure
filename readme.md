@@ -1,8 +1,13 @@
 # About
 
-[Let's Encrypt](https://letsencrypt.org/) is a free [ACME](https://datatracker.ietf.org/wg/acme/documents/) certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is DNS-01 in which case the domain in question is verified by setting up temporary TXT records for your domain.
+[Let's Encrypt](https://letsencrypt.org/) is a free [ACME](https://datatracker.ietf.org/wg/acme/documents/) certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is **DNS-01** in which case the domain in question is verified by setting up temporary TXT records for your domain. The official Let's Encrypt client doesn't support DNS-01 yet, so you need a 3rd party client, such as [letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh). DNS-01 has important advantages over other methods:
 
-**Certzure** is a DNS-01 hook for the 3rd party [letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh) client. It allows for obtaining and/or renewing certificates for domains managed by [Azure DNS](https://azure.microsoft.com/en-us/services/dns/).
+- It doesn't require additional webserver configuration
+- It doesn't require additional firewall configuration
+- It doesn't make you stop your webserver
+- Most importantly, it doesn't require the webserver to be publicly accessible thus you can obtain certificates for Intranet sites as well
+
+**Certzure** is a DNS-01 hook for letsencrypt.sh. With Certzure, you can obtain and renew certificates for domains managed by [Azure DNS](https://azure.microsoft.com/en-us/services/dns/).
 
 You **need** to perform a few tasks by hand to prepare your environment correctly - this is not an _it just works_ application, so please follow this guide before attempting to use it, otherwise the attempt **will** fail.
 
