@@ -116,3 +116,30 @@ Once everything's in place, you can obtain a certificate with the following comm
 ~~~
 ./letsencrypt.sh --cron --hook /opt/certzure/certzure.sh --challenge dns-01
 ~~~
+
+
+# FAQ
+
+- Why don't you use the REST API?
+
+Because there's no REST API for Azure DNS yet. Remember, even the service is in preview, let alone the API.
+
+- Why can't I use a certificate for authentication?
+
+That's a very good question, you might as well ask the Azure API developers and let me know the reason!
+
+- Why Java?
+
+Because that's the only available option on Linux. Since most webservers run on Linux, that should be a priority. The Python API only supports REST and as mentioned above, that lacks DNS support. Finally, Mono doesn't have Azure support at all.
+
+- Why is the JAR so big?
+
+Actually, it's already way smaller than it used to be, thanks to some JAR cleanup methods. Either way, it's because of the dependencies. Certzure depends on AAD and Azure libraries, those in turn also rely on Apache libraries, and so on. Cerzure itself only adds about 20kB to the total size.
+
+- Why are there so many unhandled exceptions and other caveats in the code?
+
+Because I had to implement this in a hurry, with totally awful, and often nonexistent documentation, without good examples, at a time when the Azure folks moved their repos so I even had to dig out some of the example code from Google Cache. Also, I'm not even a Java programmer, so the fact that this program even works is already quite an accomplishment on its own. Patches are very-very welcome!
+
+- FUUUUU Microsoft sucks yada yada
+
+Take a deep breath.
