@@ -134,12 +134,16 @@ Because that's the only available option on Linux. Since most webservers run on 
 
 - Why is the JAR so big?
 
-Actually, it's already way smaller than it used to be, thanks to some JAR cleanup methods. Either way, it's because of the dependencies. Certzure depends on AAD and Azure libraries, those in turn also rely on Apache libraries, and so on. Cerzure itself only adds about 20kB to the total size.
+Actually, it's already way smaller than it used to be, thanks to some JAR cleanup methods. Either way, it's because of the dependencies. Certzure depends on AAD and Azure libraries, those in turn also rely on Apache libraries, and so on and so forth. Cerzure itself only adds about 20kB to the total size.
 
 - Why are there so many unhandled exceptions and other caveats in the code?
 
 Because I had to implement this in a hurry, with totally awful, and often nonexistent documentation, without good examples, at a time when the Azure folks moved their repos so I even had to dig out some of the example code from Google Cache. Also, I'm not even a Java programmer, so the fact that this program even works is already quite an accomplishment on its own. Patches are very-very welcome!
 
-- FUUUUU Microsoft sucks yada yada
+- Do you plan to support Certbot once they add DNS-01 support?
+
+Most definitely.
+
+- FUUUUU Azure, Microsoft sucks, etc.
 
 Take a deep breath.
