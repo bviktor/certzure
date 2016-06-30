@@ -74,6 +74,7 @@ To download letsencrypt.sh and Certzure (make sure to update **VERSION** to the 
 VERSION=0.0.0
 wget https://github.com/bviktor/certzure/releases/download/v${VERSION}/certzure-${VERSION}.zip
 unzip certzure-${VERSION}.zip -d /opt
+chmod +x /opt/certzure/certzure.sh
 git clone https://github.com/lukas2511/letsencrypt.sh.git
 cd letsencrypt.sh
 ~~~
