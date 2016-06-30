@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.security.cert.*;
+
+import org.apache.commons.mail.*;
 
 import org.apache.http.*;
 import org.apache.http.client.*;
@@ -35,9 +38,10 @@ public class Certzure
 				com.microsoft.windowsazure.credentials.Exports.class, com.microsoft.windowsazure.management.configuration.Exports.class };
 	}
 
+	static final String certDir = "/etc/letsencrypt/live";
 	static final String settingsFileName = "certzure.properties";
 	static final String challengeString = "_acme-challenge";
-	static final String[] supportedOperations = { "deploy_challenge", "clean_challenge" };
+	static final String[] supportedOperations = { "deploy_challenge", "clean_challenge", "deploy_cert" };
 
 	/*
 	 * TODO: figure out URIs:
@@ -64,6 +68,7 @@ public class Certzure
 		System.out.println("Supported operationName values:");
 		System.out.println("\tdeploy_challenge");
 		System.out.println("\tclean_challenge");
+		System.out.println("\tdeploy_cert");
 	}
 
 	/*
@@ -246,6 +251,33 @@ public class Certzure
 		}
 	}
 
+	public static String checkCert(String domainName)
+	{
+		InputStream inStream = null;
+		String body = "";
+
+		try
+		{
+			inStream = new FileInputStream(certDir + "/" + domainName + "/cert.pem");
+			CertificateFactory cf = CertificateFactory.getInstance("X.509");
+			X509Certificate cert = (X509Certificate) cf.generateCertificate(inStream);
+
+			body += "Subject DN:\t" + cert.getSubjectDN() + "\n";
+			body += "Issuer DN:\t" + cert.getIssuerDN() + "\n";
+			body += "Valid from:\t" + cert.getNotBefore() + "\n";
+			body += "Valid until:\t" + cert.getNotAfter() + "\n";
+
+			inStream.close();
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return body;
+	}
+
 	public static boolean deployChallenge(DnsManagementClient dnsClient, String resourceGroupName, String domainName, String token, boolean verifyRecord) throws Exception
 	{
 		String zone = extractFqdn(domainName, extractMode.ZONE);
@@ -327,6 +359,41 @@ public class Certzure
 		}
 	}
 
+	public static boolean deployCert(String domainName, String smtpHost, int smtpPort, String smtpSender, String smtpRcpt, String smtpUser, String smtpPassword, boolean smtpSsl,
+			boolean smtpStartTls)
+	{
+		Email email = new SimpleEmail();
+		email.setHostName(smtpHost);
+		email.setSmtpPort(smtpPort);
+		email.setAuthentication(smtpUser, smtpPassword);
+		email.setSubject("Certzure Renewal Report @ " + domainName);
+
+		if (smtpStartTls)
+		{
+			email.setStartTLSRequired(true);
+		}
+
+		if (smtpSsl)
+		{
+			email.setSSLOnConnect(true);
+		}
+
+		try
+		{
+			email.setFrom(smtpSender);
+			email.addTo(smtpRcpt);
+			email.setMsg(checkCert(domainName));
+			email.send();
+		}
+		catch (EmailException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
 	public static void main(String[] args)
 	{
 		String operationName = null;
@@ -371,6 +438,14 @@ public class Certzure
 			// System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
 			// System.out.println("keyStorePassword = \"whatnever\"");
 			System.out.println("resourceGroupName = \"DNSGroup\"\n");
+			System.out.println("smtpHost = \"smtp.office365.com\"");
+			System.out.println("smtpPort = \"587\"");
+			System.out.println("smtpSender = \"certzure@foobar.com\"");
+			System.out.println("smtpRcpt = \"admin@foobar.com\"");
+			System.out.println("smtpUser = \"certzure@foobar.com\"");
+			System.out.println("smtpPassword = \"whatforever\"");
+			System.out.println("smtpSsl = \"false\"");
+			System.out.println("smtpStartTls = \"true\"");
 			System.out.println("Also make sure to secure this file with chmod and/or chown.");
 			System.exit(1);
 		}
@@ -380,6 +455,14 @@ public class Certzure
 		String username = parseProperty(properties, "username");
 		String password = parseProperty(properties, "password");
 		String resourceGroupName = parseProperty(properties, "resourceGroupName");
+		String smtpHost = parseProperty(properties, "smtpHost");
+		String smtpPortString = parseProperty(properties, "smtpPort");
+		String smtpSender = parseProperty(properties, "smtpSender");
+		String smtpRcpt = parseProperty(properties, "smtpRcpt");
+		String smtpUser = parseProperty(properties, "smtpUser");
+		String smtpPassword = parseProperty(properties, "smtpPassword");
+		String smtpSslString = parseProperty(properties, "smtpSsl");
+		String smtpStartTlsString = parseProperty(properties, "smtpStartTls");
 
 		Configuration config;
 		try
@@ -394,6 +477,11 @@ public class Certzure
 			else if (operationName.equals("clean_challenge"))
 			{
 				cleanChallenge(dnsClient, resourceGroupName, domainName);
+			}
+			else if (operationName.equals("deploy_cert"))
+			{
+				deployCert(domainName, smtpHost, Integer.parseInt(smtpPortString), smtpSender, smtpRcpt, smtpUser, smtpPassword, smtpSslString.equals("true") ? true : false,
+						smtpStartTlsString.equals("true") ? true : false);
 			}
 		}
 		catch (Exception e)
