@@ -93,6 +93,15 @@ clientId = "1950a258-227b-4e31-a9cf-717495945fc2"
 username = "dns@foobar.com"
 password = "whatever"
 resourceGroupName = "DNSGroup"
+certDir = "/opt/letsencrypt.sh/certs"
+smtpHost = "smtp.office365.com"
+smtpPort = "587"
+smtpSender = "certzure@foobar.com"
+smtpRcpt = "admin@foobar.com"
+smtpUser = "certzure@foobar.com"
+smtpPassword = "whatforever"
+smtpSsl = "false"
+smtpStartTls = "true"
 ~~~
 
 The properties should be self-explanatory:
