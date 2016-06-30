@@ -35,7 +35,7 @@ public class Certzure
 		Class<?>[] classes = new Class<?>[] { org.apache.commons.logging.impl.LogFactoryImpl.class, org.apache.commons.logging.impl.SimpleLog.class,
 				com.microsoft.azure.management.dns.Exports.class, com.microsoft.windowsazure.core.pipeline.apache.Exports.class,
 				com.microsoft.windowsazure.core.pipeline.jersey.Exports.class, com.microsoft.windowsazure.core.utils.Exports.class,
-				com.microsoft.windowsazure.credentials.Exports.class, com.microsoft.windowsazure.management.configuration.Exports.class };
+				com.microsoft.windowsazure.credentials.Exports.class, com.microsoft.windowsazure.management.configuration.Exports.class, com.sun.mail.smtp.SMTPTransport.class };
 	}
 
 	static final String settingsFileName = "certzure.properties";
