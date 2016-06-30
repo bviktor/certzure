@@ -436,7 +436,8 @@ public class Certzure
 			System.out.println("password = \"whatever\"");
 			// System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
 			// System.out.println("keyStorePassword = \"whatnever\"");
-			System.out.println("resourceGroupName = \"DNSGroup\"\n");
+			System.out.println("resourceGroupName = \"DNSGroup\"");
+			System.out.println("certDir = \"/opt/letsencrypt.sh/certs\"");
 			System.out.println("smtpHost = \"smtp.office365.com\"");
 			System.out.println("smtpPort = \"587\"");
 			System.out.println("smtpSender = \"certzure@foobar.com\"");
@@ -444,7 +445,7 @@ public class Certzure
 			System.out.println("smtpUser = \"certzure@foobar.com\"");
 			System.out.println("smtpPassword = \"whatforever\"");
 			System.out.println("smtpSsl = \"false\"");
-			System.out.println("smtpStartTls = \"true\"");
+			System.out.println("smtpStartTls = \"true\"\n");
 			System.out.println("Also make sure to secure this file with chmod and/or chown.");
 			System.exit(1);
 		}
