@@ -468,15 +468,16 @@ public class Certzure
 		Configuration config;
 		try
 		{
-			config = createConfiguration(subscriptionId, clientId, username, password);
-			DnsManagementClient dnsClient = DnsManagementService.create(config);
-
 			if (operationName.equals("deploy_challenge"))
 			{
+				config = createConfiguration(subscriptionId, clientId, username, password);
+				DnsManagementClient dnsClient = DnsManagementService.create(config);
 				deployChallenge(dnsClient, resourceGroupName, domainName, domainToken, true);
 			}
 			else if (operationName.equals("clean_challenge"))
 			{
+				config = createConfiguration(subscriptionId, clientId, username, password);
+				DnsManagementClient dnsClient = DnsManagementService.create(config);
 				cleanChallenge(dnsClient, resourceGroupName, domainName);
 			}
 			else if (operationName.equals("deploy_cert"))
