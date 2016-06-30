@@ -38,7 +38,6 @@ public class Certzure
 				com.microsoft.windowsazure.credentials.Exports.class, com.microsoft.windowsazure.management.configuration.Exports.class };
 	}
 
-	static final String certDir = "/etc/letsencrypt/live";
 	static final String settingsFileName = "certzure.properties";
 	static final String challengeString = "_acme-challenge";
 	static final String[] supportedOperations = { "deploy_challenge", "clean_challenge", "deploy_cert" };
@@ -251,7 +250,7 @@ public class Certzure
 		}
 	}
 
-	public static String checkCert(String domainName)
+	public static String checkCert(String certDir, String domainName)
 	{
 		InputStream inStream = null;
 		String body = "";
@@ -359,8 +358,8 @@ public class Certzure
 		}
 	}
 
-	public static boolean deployCert(String domainName, String smtpHost, int smtpPort, String smtpSender, String smtpRcpt, String smtpUser, String smtpPassword, boolean smtpSsl,
-			boolean smtpStartTls)
+	public static boolean deployCert(String certDir, String domainName, String smtpHost, int smtpPort, String smtpSender, String smtpRcpt, String smtpUser, String smtpPassword,
+			boolean smtpSsl, boolean smtpStartTls)
 	{
 		Email email = new SimpleEmail();
 		email.setHostName(smtpHost);
@@ -382,7 +381,7 @@ public class Certzure
 		{
 			email.setFrom(smtpSender);
 			email.addTo(smtpRcpt);
-			email.setMsg(checkCert(domainName));
+			email.setMsg(checkCert(certDir, domainName));
 			email.send();
 		}
 		catch (EmailException e)
@@ -455,6 +454,7 @@ public class Certzure
 		String username = parseProperty(properties, "username");
 		String password = parseProperty(properties, "password");
 		String resourceGroupName = parseProperty(properties, "resourceGroupName");
+		String certDir = parseProperty(properties, "certDir");
 		String smtpHost = parseProperty(properties, "smtpHost");
 		String smtpPortString = parseProperty(properties, "smtpPort");
 		String smtpSender = parseProperty(properties, "smtpSender");
@@ -480,8 +480,8 @@ public class Certzure
 			}
 			else if (operationName.equals("deploy_cert"))
 			{
-				deployCert(domainName, smtpHost, Integer.parseInt(smtpPortString), smtpSender, smtpRcpt, smtpUser, smtpPassword, smtpSslString.equals("true") ? true : false,
-						smtpStartTlsString.equals("true") ? true : false);
+				deployCert(certDir, domainName, smtpHost, Integer.parseInt(smtpPortString), smtpSender, smtpRcpt, smtpUser, smtpPassword,
+						smtpSslString.equals("true") ? true : false, smtpStartTlsString.equals("true") ? true : false);
 			}
 		}
 		catch (Exception e)
