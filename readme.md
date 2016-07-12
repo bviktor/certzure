@@ -66,26 +66,49 @@ Now open the **[new portal](https://portal.azure.com/)**:
 
 # Client
 
+## Prerequisites
+
 Certzure needs **JRE 1.5** or later to work. Please note that this only applies to Certzure itself, I cannot guarantee that all other dependencies also support this version.
 
-To download letsencrypt.sh and Certzure (make sure to update **VERSION** to the latest one):
+## Installation
+
+Tell your environment what the latest version of Certzure is and also your [domain name(s)](https://github.com/lukas2511/letsencrypt.sh/blob/master/docs/domains_txt.md):
 
 ~~~
-VERSION=0.0.0
-wget https://github.com/bviktor/certzure/releases/download/v${VERSION}/certzure-${VERSION}.zip
-unzip certzure-${VERSION}.zip -d /opt
+CERTZURE_VERSION=0.0.0
+MY_DOMAIN=your.domain.name
+~~~
+
+Now install letsencrypt.sh and Certzure:
+
+~~~
+wget https://github.com/bviktor/certzure/releases/download/v${CERTZURE_VERSION}/certzure-${CERTZURE_VERSION}.zip
+unzip certzure-${CERTZURE_VERSION}.zip -d /opt
 chmod +x /opt/certzure/certzure.sh
-git clone https://github.com/lukas2511/letsencrypt.sh.git
-cd letsencrypt.sh
+git clone https://github.com/lukas2511/letsencrypt.sh.git /opt/letsencrypt.sh
+echo ${MY_DOMAIN} > /opt/letsencrypt.sh/domains.txt
+touch /opt/certzure/certzure.properties
+chown root.root /opt/certzure/certzure.properties
+chmod 0400 /opt/certzure/certzure.properties
 ~~~
 
-Tell letsencrypt.sh what your domain name is:
+## Configuration
+
+### letsencrypt.sh
+
+It's recommended to test the staging Let's Encrypt CA first due to [their limits](https://letsencrypt.org/docs/rate-limits/).
+You can configure this via letsencrypt.sh's **config** file:
 
 ~~~
-echo 'your.domain.name' > domains.txt
+echo 'CA="https://acme-staging.api.letsencrypt.org/directory"' >> /opt/letsencrypt.sh/config
 ~~~
 
-Now set up the Certzure config file, **/opt/certzure/certzure.properties**:
+Once everything's working fine, just commment this line out with a number sign (#).
+For more configuration options, refer to the [example config](https://github.com/lukas2511/letsencrypt.sh/blob/master/docs/examples/config).
+
+### Certzure
+
+Set up the Certzure config file, **/opt/certzure/certzure.properties**:
 
 ~~~
 subscriptionId = "2a4da06c-ff07-410d-af8a-542a512f5092"
@@ -119,14 +142,7 @@ The properties should be self-explanatory:
 - **smtpSsl**: use SSL for SMTP (true / false)
 - **smtpStartTls**: use STARTTLS for SMTP (true / false)
 
-After this, you **need** to restrict access to this file, **otherwise other users may gain access to this account's credentials**. Example:
-
-~~~
-chown root.root /opt/certzure/certzure.properties
-chmod 0400 /opt/certzure/certzure.properties
-~~~
-
-# Usage
+## Usage
 
 Once everything's in place, you can obtain a certificate with the following command:
 
@@ -134,6 +150,12 @@ Once everything's in place, you can obtain a certificate with the following comm
 ./letsencrypt.sh --cron --hook /opt/certzure/certzure.sh --challenge dns-01
 ~~~
 
+To make your system renew certs every month:
+
+~~~
+echo '00 07 1 * * root /opt/letsencrypt.sh/letsencrypt.sh "--cron" "--hook" "/opt/certzure/certzure.sh" "--challenge" "dns-01" "--force" >> /var/log/certzure.log 2>&1' > /etc/cron.d/certzure
+systemctl restart crond.service
+~~~
 
 # FAQ
 

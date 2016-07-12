@@ -1,0 +1,2 @@
+# Install this as /etc/cron.d/certzure to renew your certificates every month
+00 07 1 * * root /opt/letsencrypt.sh/letsencrypt.sh "--cron" "--hook" "/opt/certzure/certzure.sh" "--challenge" "dns-01" "--force" >> /var/log/certzure.log 2>&1
