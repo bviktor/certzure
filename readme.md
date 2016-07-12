@@ -75,8 +75,8 @@ Certzure needs **JRE 1.5** or later to work. Please note that this only applies 
 Tell your environment what the latest version of Certzure is and also your [domain name(s)](https://github.com/lukas2511/letsencrypt.sh/blob/master/docs/domains_txt.md):
 
 ~~~
-CERTZURE_VERSION=0.0.0
-MY_DOMAIN=your.domain.name
+CERTZURE_VERSION='0.0.0'
+MY_DOMAIN='your.domain.name'
 ~~~
 
 Now install letsencrypt.sh and Certzure:
