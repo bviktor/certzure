@@ -250,14 +250,14 @@ public class Certzure
 		}
 	}
 
-	public static String checkCert(String certDir, String domainName)
+	public static String checkCert(String certFile)
 	{
 		InputStream inStream = null;
 		String body = "";
 
 		try
 		{
-			inStream = new FileInputStream(certDir + "/" + domainName + "/cert.pem");
+			inStream = new FileInputStream(certFile);
 			CertificateFactory cf = CertificateFactory.getInstance("X.509");
 			X509Certificate cert = (X509Certificate) cf.generateCertificate(inStream);
 
@@ -358,7 +358,7 @@ public class Certzure
 		}
 	}
 
-	public static boolean deployCert(String certDir, String domainName, String smtpHost, int smtpPort, String smtpSender, String smtpRcpt, String smtpUser, String smtpPassword,
+	public static boolean deployCert(String certFile, String domainName, String smtpHost, int smtpPort, String smtpSender, String smtpRcpt, String smtpUser, String smtpPassword,
 			boolean smtpSsl, boolean smtpStartTls)
 	{
 		Email email = new SimpleEmail();
@@ -381,7 +381,7 @@ public class Certzure
 		{
 			email.setFrom(smtpSender);
 			email.addTo(smtpRcpt);
-			email.setMsg(checkCert(certDir, domainName));
+			email.setMsg(checkCert(certFile));
 			email.send();
 		}
 		catch (EmailException e)
@@ -437,7 +437,7 @@ public class Certzure
 			// System.out.println("keyStoreLocation = \"c:\\azure.pfx\"");
 			// System.out.println("keyStorePassword = \"whatnever\"");
 			System.out.println("resourceGroupName = \"DNSGroup\"");
-			System.out.println("certDir = \"/opt/letsencrypt.sh/certs\"");
+			//System.out.println("certDir = \"/opt/letsencrypt.sh/certs\"");
 			System.out.println("smtpHost = \"smtp.office365.com\"");
 			System.out.println("smtpPort = \"587\"");
 			System.out.println("smtpSender = \"certzure@foobar.com\"");
@@ -455,7 +455,7 @@ public class Certzure
 		String username = parseProperty(properties, "username");
 		String password = parseProperty(properties, "password");
 		String resourceGroupName = parseProperty(properties, "resourceGroupName");
-		String certDir = parseProperty(properties, "certDir");
+		//String certDir = parseProperty(properties, "certDir");
 		String smtpHost = parseProperty(properties, "smtpHost");
 		String smtpPortString = parseProperty(properties, "smtpPort");
 		String smtpSender = parseProperty(properties, "smtpSender");
@@ -482,7 +482,10 @@ public class Certzure
 			}
 			else if (operationName.equals("deploy_cert"))
 			{
-				deployCert(certDir, domainName, smtpHost, Integer.parseInt(smtpPortString), smtpSender, smtpRcpt, smtpUser, smtpPassword,
+				/* For deploy_cert the 3rd argument is the issued certificate's path */
+				String certFile = domainToken;
+
+				deployCert(certFile, domainName, smtpHost, Integer.parseInt(smtpPortString), smtpSender, smtpRcpt, smtpUser, smtpPassword,
 						smtpSslString.equals("true") ? true : false, smtpStartTlsString.equals("true") ? true : false);
 			}
 		}
