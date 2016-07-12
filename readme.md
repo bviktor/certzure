@@ -93,7 +93,6 @@ clientId = "1950a258-227b-4e31-a9cf-717495945fc2"
 username = "dns@foobar.com"
 password = "whatever"
 resourceGroupName = "DNSGroup"
-certDir = "/opt/letsencrypt.sh/certs"
 smtpHost = "smtp.office365.com"
 smtpPort = "587"
 smtpSender = "certzure@foobar.com"
@@ -111,6 +110,14 @@ The properties should be self-explanatory:
 - **username**: either an Azure co-admin or a user account with granted permissions as explained above - **Note**: this account must not have 2FA enabled
 - **password**: the account's password
 - **resourceGroupName**: the resource group that holds your DNS zones
+- **smtpHost**: SMTP server address
+- **smtpPort**: SMTP server port
+- **smtpSender**: sender of the notification emails (**From:** field)
+- **smtpRcpt**: recipient of the notification emails (**To:** field)
+- **smtpUser**: SMTP user name
+- **smtpPassword**: SMTP password
+- **smtpSsl**: use SSL for SMTP (true / false)
+- **smtpStartTls**: use STARTTLS for SMTP (true / false)
 
 After this, you **need** to restrict access to this file, **otherwise other users may gain access to this account's credentials**. Example:
 
