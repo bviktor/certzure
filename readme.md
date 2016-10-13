@@ -1,13 +1,13 @@
 # About
 
-**[Let's Encrypt](https://letsencrypt.org/)** is a free **[ACME](https://datatracker.ietf.org/wg/acme/documents/)** certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is **DNS-01** in which case the domain in question is verified by setting up temporary TXT records for your domain. **[Certbot](https://certbot.eff.org/)**, the official Let's Encrypt client [doesn't support DNS-01 yet](https://github.com/certbot/certbot/pull/2061), so you need a 3rd party client, such as **[letsencrypt.sh](https://github.com/lukas2511/letsencrypt.sh)**. DNS-01 has important advantages over other methods:
+**[Let's Encrypt](https://letsencrypt.org/)** is a free **[ACME](https://datatracker.ietf.org/wg/acme/documents/)** certificate authority. ACME allows for automated certificate provisioning and renewal, which requires certain verification methods to be in place. One of those is **DNS-01** in which case the domain in question is verified by setting up temporary TXT records for your domain. **[Certbot](https://certbot.eff.org/)**, the official Let's Encrypt client [doesn't support DNS-01 yet](https://github.com/certbot/certbot/pull/2061), so you need a 3rd party client, such as **[dehydrated](https://github.com/lukas2511/dehydrated)**. DNS-01 has important advantages over other methods:
 
 - It doesn't require additional webserver configuration
 - It doesn't require additional firewall configuration
 - It doesn't make you stop your webserver
 - Most importantly, it doesn't require the webserver to be publicly accessible thus you can obtain certificates for Intranet sites as well
 
-**Certzure** is a DNS-01 hook for letsencrypt.sh. With Certzure, you can obtain and renew certificates for domains managed by **[Azure DNS](https://azure.microsoft.com/en-us/services/dns/)**.
+**Certzure** is a DNS-01 hook for dehydrated. With Certzure, you can obtain and renew certificates for domains managed by **[Azure DNS](https://azure.microsoft.com/en-us/services/dns/)**.
 
 You **need** to perform a few tasks by hand to prepare your environment correctly - this is not an _it just works_ application, so please follow this guide before attempting to use it, otherwise the attempt **will** fail.
 
@@ -72,21 +72,21 @@ Certzure needs **JRE 1.5** or later to work. Please note that this only applies 
 
 ## Installation
 
-Tell your environment what the latest version of Certzure is and also your [domain name(s)](https://github.com/lukas2511/letsencrypt.sh/blob/master/docs/domains_txt.md):
+Tell your environment what the latest version of Certzure is and also your [domain name(s)](https://github.com/lukas2511/dehydrated/blob/master/docs/domains_txt.md):
 
 ~~~
 CERTZURE_VERSION='0.0.0'
 MY_DOMAIN='your.domain.name'
 ~~~
 
-Now install letsencrypt.sh and Certzure:
+Now install dehydrated and Certzure:
 
 ~~~
 wget https://github.com/bviktor/certzure/releases/download/v${CERTZURE_VERSION}/certzure-${CERTZURE_VERSION}.zip
 unzip certzure-${CERTZURE_VERSION}.zip -d /opt
 chmod +x /opt/certzure/certzure.sh
-git clone https://github.com/lukas2511/letsencrypt.sh.git /opt/letsencrypt.sh
-echo ${MY_DOMAIN} > /opt/letsencrypt.sh/domains.txt
+git clone https://github.com/lukas2511/dehydrated /opt/dehydrated
+echo ${MY_DOMAIN} > /opt/dehydrated/domains.txt
 touch /opt/certzure/certzure.properties
 chown root.root /opt/certzure/certzure.properties
 chmod 0400 /opt/certzure/certzure.properties
@@ -94,17 +94,17 @@ chmod 0400 /opt/certzure/certzure.properties
 
 ## Configuration
 
-### letsencrypt.sh
+### dehydrated
 
 It's recommended to test the staging Let's Encrypt CA first due to [their limits](https://letsencrypt.org/docs/rate-limits/).
-You can configure this via letsencrypt.sh's **config** file:
+You can configure this via dehydrated's **config** file:
 
 ~~~
-echo 'CA="https://acme-staging.api.letsencrypt.org/directory"' >> /opt/letsencrypt.sh/config
+echo 'CA="https://acme-staging.api.letsencrypt.org/directory"' >> /opt/dehydrated/config
 ~~~
 
 Once everything's working fine, just commment this line out with a number sign (#).
-For more configuration options, refer to the [example config](https://github.com/lukas2511/letsencrypt.sh/blob/master/docs/examples/config).
+For more configuration options, refer to the [example config](https://github.com/lukas2511/dehydrated/blob/master/docs/examples/config).
 
 ### Certzure
 
@@ -147,13 +147,13 @@ The properties should be self-explanatory:
 Once everything's in place, you can obtain a certificate with the following command:
 
 ~~~
-./letsencrypt.sh --cron --hook /opt/certzure/certzure.sh --challenge dns-01
+/opt/dehydrated/dehydrated --cron --hook /opt/certzure/certzure.sh --challenge dns-01
 ~~~
 
 To make your system renew certs every month:
 
 ~~~
-echo '00 07 1 * * root /opt/letsencrypt.sh/letsencrypt.sh "--cron" "--hook" "/opt/certzure/certzure.sh" "--challenge" "dns-01" "--force" >> /var/log/certzure.log 2>&1' > /etc/cron.d/certzure
+echo '00 07 1 * * root /opt/dehydrated/dehydrated "--cron" "--hook" "/opt/certzure/certzure.sh" "--challenge" "dns-01" "--force" >> /var/log/certzure.log 2>&1' > /etc/cron.d/certzure
 systemctl restart crond.service
 ~~~
 
