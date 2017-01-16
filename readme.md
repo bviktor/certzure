@@ -104,7 +104,11 @@ echo 'CA="https://acme-staging.api.letsencrypt.org/directory"' >> /opt/dehydrate
 ~~~
 
 Once everything's working fine, just commment this line out with a number sign (#).
-For more configuration options, refer to the [example config](https://github.com/lukas2511/dehydrated/blob/master/docs/examples/config).
+For more configuration options, refer to the [example config](https://github.com/lukas2511/dehydrated/blob/master/docs/examples/config). If you're going to deploy HPKP, you most definitely want to enable private key rollover:
+
+~~~
+echo 'PRIVATE_KEY_ROLLOVER="yes"' >> /opt/dehydrated/config
+~~~
 
 ### Certzure
 
