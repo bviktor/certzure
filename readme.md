@@ -153,7 +153,7 @@ echo 'PRIVATE_KEY_ROLLOVER="yes"' >> /opt/dehydrated/config
 Also make sure to regenerate the key pins upon each renewal:
 
 ~~~
-echo '/etc/nginx/hpkp/hpkp.sh' >> /opt/certzure/certzure.sh
+echo '/etc/nginx/hpkp/hpkp.sh $1 $2 $3 $4' >> /opt/certzure/certzure.sh
 ~~~
 
 ## Usage
