@@ -104,11 +104,7 @@ echo 'CA="https://acme-staging.api.letsencrypt.org/directory"' >> /opt/dehydrate
 ~~~
 
 Once everything's working fine, just commment this line out with a number sign (#).
-For more configuration options, refer to the [example config](https://github.com/lukas2511/dehydrated/blob/master/docs/examples/config). If you're going to deploy HPKP, you most definitely want to enable private key rollover:
-
-~~~
-echo 'PRIVATE_KEY_ROLLOVER="yes"' >> /opt/dehydrated/config
-~~~
+For more configuration options, refer to the [example config](https://github.com/lukas2511/dehydrated/blob/master/docs/examples/config).
 
 ### Certzure
 
@@ -145,6 +141,20 @@ The properties should be self-explanatory:
 - **smtpPassword**: SMTP password
 - **smtpSsl**: use SSL for SMTP (true / false)
 - **smtpStartTls**: use STARTTLS for SMTP (true / false)
+
+### HPKP
+
+If you're going to deploy HPKP, you most definitely want to enable private key rollover:
+
+~~~
+echo 'PRIVATE_KEY_ROLLOVER="yes"' >> /opt/dehydrated/config
+~~~
+
+Also make sure to regenerate the key pins upon each renewal:
+
+~~~
+echo '/etc/nginx/hpkp/hpkp.sh' >> /opt/certzure/certzure.sh
+~~~
 
 ## Usage
 
