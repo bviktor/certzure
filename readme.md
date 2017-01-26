@@ -144,13 +144,13 @@ The properties should be self-explanatory:
 
 ### HPKP
 
-If you're going to deploy HPKP, you most definitely want to enable private key rollover:
+If you're going to deploy HPKP, you most definitely want to enable private key rollover for dehydrated:
 
 ~~~
 echo 'PRIVATE_KEY_ROLLOVER="yes"' >> /opt/dehydrated/config
 ~~~
 
-Also make sure to regenerate the key pins upon each renewal:
+Also make sure to regenerate the key pins upon each renewal using [hpkpinx](https://github.com/bviktor/hpkpinx):
 
 ~~~
 echo '/opt/hpkpinx/hpkpinx.sh $1 $2' >> /opt/certzure/certzure.sh
