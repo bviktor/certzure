@@ -6,6 +6,6 @@ then
 
     if [ $1 = 'deploy_cert' ] && [ -e /opt/hpkpinx/hpkpinx.sh ]
     then
-        sh /opt/hpkpinx/hpkpinx.sh $1 $2
+        sh /opt/hpkpinx/config.sh $1 $2
     fi
 fi
