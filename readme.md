@@ -106,6 +106,12 @@ echo 'CA="https://acme-staging.api.letsencrypt.org/directory"' >> /opt/dehydrate
 Once everything's working fine, just commment this line out with a number sign (#).
 For more configuration options, refer to the [example config](https://github.com/lukas2511/dehydrated/blob/master/docs/examples/config).
 
+At first run, make sure you accept the Let's Encrypt TOS:
+
+~~~
+/opt/dehydrated/dehydrated --register --accept-terms
+~~~
+
 ### Certzure
 
 Set up the Certzure config file, **/opt/certzure/certzure.properties**:
