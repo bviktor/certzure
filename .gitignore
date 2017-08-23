@@ -3,5 +3,6 @@
 .project
 .settings/
 certzure.properties
+custom.sh
 /target/
 dependency-reduced-pom.xml
