@@ -9,3 +9,8 @@ then
         sh /opt/hpkpinx/config.sh $1 $2
     fi
 fi
+
+if [ -e /opt/certzure/custom.sh ]
+then
+    sh /opt/certzure/custom.sh $1 $2 $3 $4
+fi
